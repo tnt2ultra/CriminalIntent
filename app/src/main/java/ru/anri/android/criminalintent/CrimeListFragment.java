@@ -105,7 +105,7 @@ public class CrimeListFragment extends Fragment {
 //                mCrimeRecyclerView.getAdapter().notifyItemMoved(5, 1);
 //            Intent intent = new Intent(getActivity(), CrimeActivity.class);
             mPositionCrime = getAdapterPosition();
-            Intent intent = CrimeActivity.newIntent(getActivity(), mCrime.getId(), mPositionCrime);
+            Intent intent = CrimeActivity.newIntent(getActivity(), mCrime.getId());
             startActivity(intent);
         }
 
