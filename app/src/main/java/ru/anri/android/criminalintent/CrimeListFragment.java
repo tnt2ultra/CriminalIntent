@@ -10,13 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 //import android.text.format.DateFormat;
-import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -45,7 +42,7 @@ public class CrimeListFragment extends Fragment {
 
     private void updateUI() {
         CrimeLab crimeLab = CrimeLab.get(getActivity());
-        List<Crime> crimes = crimeLab.getmCrimes();
+        List<Crime> crimes = crimeLab.getCrimes();
         if (mAdapter == null) {
             mAdapter = new CrimeAdapter(crimes);
             mCrimeRecyclerView.setAdapter(mAdapter);
@@ -103,9 +100,9 @@ public class CrimeListFragment extends Fragment {
         public void onClick(View view) {
 //                Toast.makeText(getActivity(), mCrime.getTitle() + " - " + getString(R.string.crime_clicked), Toast.LENGTH_SHORT).show();
 //                mCrimeRecyclerView.getAdapter().notifyItemMoved(5, 1);
-//            Intent intent = new Intent(getActivity(), CrimeActivity.class);
+//            Intent intent = new Intent(getActivity(), CrimePagerActivity.class);
             mPositionCrime = getAdapterPosition();
-            Intent intent = CrimeActivity.newIntent(getActivity(), mCrime.getId());
+            Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getId());
             startActivity(intent);
         }
 

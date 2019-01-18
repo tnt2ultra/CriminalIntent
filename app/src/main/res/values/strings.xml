@@ -13,4 +13,6 @@
     <string name="full_date_format">EEEE</string>
     <string name="full_date_time_format">EEEE, dd MMMM yyyy, HH:mm</string>
     <string name="crime_solved_txt">Crime solved</string>
+    <string name="button_go_to_begin">Go to begin</string>
+    <string name="button_go_to_end">Go to end</string>
 </resources>
