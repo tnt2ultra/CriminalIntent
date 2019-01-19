@@ -15,4 +15,5 @@
     <string name="crime_solved_txt">Crime solved</string>
     <string name="button_go_to_begin">Go to begin</string>
     <string name="button_go_to_end">Go to end</string>
+    <string name="date_picker_title">Date of crime:</string>
 </resources>
