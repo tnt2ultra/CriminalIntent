@@ -8,9 +8,7 @@
     <string name="crime_text_one">Crime #</string>
     <string name="crime_list_txt">Crime Title</string>
     <string name="crime_list_date">Crime Date</string>
-    <string name="crime_clicked">clicked!</string>
     <string name="btn_call_police">Call police</string>
-    <string name="full_date_format">EEEE</string>
     <string name="full_date_time_format">EEEE, dd MMMM yyyy, HH:mm</string>
     <string name="crime_solved_txt">Crime solved</string>
     <string name="button_go_to_begin">Go to begin</string>

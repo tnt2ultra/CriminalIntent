@@ -32,6 +32,7 @@ public class CrimePagerActivity extends AppCompatActivity implements View.OnClic
 
         mViewPager = findViewById(R.id.viewPager);
         mBtnBegin = findViewById(R.id.btnBegin);
+        mBtnBegin.setEnabled(false);
         mBtnEnd = findViewById(R.id.btnEnd);
         mCrimes = CrimeLab.get(this).getCrimes();
         FragmentManager fragmentManager = getSupportFragmentManager();
