@@ -51,4 +51,10 @@ public class Crime {
     public void setSolved(boolean mSolved) {
         this.mSolved = mSolved;
     }
+
+    public long getTime() {
+        return mDate.getTime();
+    }
+
+    public void setTime(long mTime) { this.mDate.setTime(mTime); }
 }

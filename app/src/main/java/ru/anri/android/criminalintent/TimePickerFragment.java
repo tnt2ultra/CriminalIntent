@@ -40,11 +40,11 @@ public class TimePickerFragment extends DialogFragment {
         mMinute = minute;
 
         View v = LayoutInflater.from(getActivity())
-                .inflate(R.layout.dialog_date, null);
+                .inflate(R.layout.dialog_time, null);
 
         mTimePicker = (TimePicker) v.findViewById(R.id.dialog_time_picker);
-//        mTimePicker.setHour(hour);
-//        mTimePicker.setMinute(minute);
+        mTimePicker.setCurrentHour(hour);
+        mTimePicker.setCurrentMinute(minute);
         mTimePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
             public void onTimeChanged(TimePicker timePicker, int pHour, int pMinute) {

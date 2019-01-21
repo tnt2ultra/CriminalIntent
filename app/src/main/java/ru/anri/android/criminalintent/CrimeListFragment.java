@@ -55,6 +55,7 @@ public class CrimeListFragment extends Fragment {
     private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView mTitleTextView;
         private TextView mDateTextView;
+//        private TextView mTimeTextView;
         private Crime mCrime;
         private ImageView mSolvedImageView;
 
@@ -72,6 +73,7 @@ public class CrimeListFragment extends Fragment {
             itemView.setOnClickListener(this);
             mTitleTextView = itemView.findViewById(R.id.crime_title);
             mDateTextView = itemView.findViewById(R.id.crime_date);
+//            mTimeTextView = itemView.findViewById(R.id.crime_time);
             mSolvedImageView = itemView.findViewById(R.id.crime_solved);
         }
 
@@ -81,6 +83,7 @@ public class CrimeListFragment extends Fragment {
 //            mDateTextView.setText(mCrime.getDate().toString());
 //            mDateTextView.setText(DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT).format(mCrime.getDate()));
             mDateTextView.setText(formatDate(mCrime.getDate()));
+//            mTimeTextView.setText(formatTime(mCrime.getDate()));
 //            android.text.format.DateUtils.formatDateTime(getContext(), millis,
 //                    android.text.format.DateUtils.FORMAT_SHOW_WEEKDAY | android.text.format.DateUtils.FORMAT_SHOW_DATE | android.text.format.DateUtils.FORMAT_SHOW_YEAR);
             if (mSolvedImageView != null) {
@@ -93,6 +96,12 @@ public class CrimeListFragment extends Fragment {
 //            return android.text.format.DateFormat.format(getString(R.string.full_date_format), date) + ", " + df.format(date);
             java.lang.CharSequence stDate = android.text.format.DateFormat.format(getString(R.string.full_date_time_format), date);  //import android.text.format.DateFormat;
             String st = stDate.toString();
+            return st;
+        }
+
+        private String formatTime(Date time){
+            java.lang.CharSequence stTime = android.text.format.DateFormat.format(getString(R.string.full_time_format), time);
+            String st = stTime.toString();
             return st;
         }
 

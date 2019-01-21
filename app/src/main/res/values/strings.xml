@@ -9,10 +9,11 @@
     <string name="crime_list_txt">Crime Title</string>
     <string name="crime_list_date">Crime Date</string>
     <string name="btn_call_police">Call police</string>
-    <string name="full_date_time_format">EEEE, dd MMMM yyyy, HH:mm</string>
+    <string name="full_date_time_format"> EEEE, dd MMMM yyyy, HH:mm </string>
     <string name="crime_solved_txt">Crime solved</string>
     <string name="button_go_to_begin">Go to begin</string>
     <string name="button_go_to_end">Go to end</string>
     <string name="date_picker_title">Date of crime:</string>
     <string name="time_picker_title">Time of crime:</string>
+    <string name="full_time_format"> HH:mm </string>
 </resources>
