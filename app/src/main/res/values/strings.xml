@@ -14,4 +14,5 @@
     <string name="button_go_to_begin">Go to begin</string>
     <string name="button_go_to_end">Go to end</string>
     <string name="date_picker_title">Date of crime:</string>
+    <string name="time_picker_title">Time of crime:</string>
 </resources>
