@@ -19,14 +19,14 @@ public class CrimeLab {
 
     private CrimeLab(Context context) {
         mCrimes = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            Crime crime = new Crime();
-            crime.setTitle(context.getString(R.string.crime_text_one) + i);
-            crime.setSolved(i % 2 == 0);
-            int j = i % 5;
-            crime.setRequiresPolice(j == 2);
-            mCrimes.add(crime);
-        }
+    }
+
+    public void deleteCrime(Crime c) {
+        mCrimes.remove(c);
+    }
+
+    public void addCrime(Crime c) {
+        mCrimes.add(c);
     }
 
     public List<Crime> getCrimes() {
