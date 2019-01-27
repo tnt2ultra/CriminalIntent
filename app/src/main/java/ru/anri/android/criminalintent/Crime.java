@@ -9,6 +9,7 @@ public class Crime {
     private Date mDate;
     private boolean mSolved;
     private boolean mRequiresPolice;
+    private String mSuspect;
 
     public Crime(UUID id) {
         this.mId = id;
@@ -60,4 +61,12 @@ public class Crime {
     }
 
     public void setTime(long mTime) { this.mDate.setTime(mTime); }
+
+    public String getSuspect() {
+        return mSuspect;
+    }
+
+    public void setSuspect(String suspect) {
+        mSuspect = suspect;
+    }
 }

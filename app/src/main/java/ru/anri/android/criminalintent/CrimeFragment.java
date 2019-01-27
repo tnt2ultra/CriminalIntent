@@ -37,6 +37,7 @@ public class CrimeFragment extends Fragment {
     private Button mDateButton;
     private Button mTimeButton;
     private CheckBox mSolvedCheckBox;
+    private CheckBox mRequiredPolice;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -123,6 +124,14 @@ public class CrimeFragment extends Fragment {
                 mCrime.setSolved(b);
             }
         });
+        mRequiredPolice = v.findViewById(R.id.crime_requires_police);
+        mRequiredPolice.setChecked(mCrime.isRequiresPolice());
+        mRequiredPolice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                mCrime.setRequiresPolice(b);
+            }
+        });
 //        int cnt = CrimeLab.get(getActivity()).getCrimes().size();
         return v;
     }
@@ -157,14 +166,12 @@ public class CrimeFragment extends Fragment {
     }
 
     private void updateDate() {
-//        mDateButton.setText(mCrime.getDate().toString());
 //        mDateButton.setText(DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT).format(mCrime.getDate()));
-//        mDateButton.setText(mCrime.getDate().toString());
         mDateButton.setText(DateFormat
-                .getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT)
+                .getDateInstance(DateFormat.LONG)
                 .format(mCrime.getDate()));
         mTimeButton.setText(DateFormat
-                .getTimeInstance()
+                .getTimeInstance(DateFormat.SHORT)
                 .format(mCrime.getDate()));
     }
 }

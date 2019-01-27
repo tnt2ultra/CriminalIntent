@@ -26,4 +26,7 @@
         <item quantity="one">%1$d crime</item>
         <item quantity="other">%1$d crimes</item>
     </plurals>
+    <string name="crime_suspect_text">Choose Suspect</string>
+    <string name="crime_report_text">Send Crime Report</string>
+    <string name="crime_requires_police">Requires Police</string>
 </resources>

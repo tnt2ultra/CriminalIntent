@@ -1,66 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="16dp"
-    android:orientation="vertical"
     tools:context=".CrimeFragment">
 
         <TextView
+            android:id="@+id/textView"
             style="?android:listSeparatorTextViewStyle"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:text="@string/crime_title_label" />
+            android:text="@string/crime_title_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/crime_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:hint="@string/crime_title_hint"
             android:importantForAutofill="no"
             android:inputType=""
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
             tools:targetApi="o" />
 
         <TextView
+            android:id="@+id/textView2"
             style="?android:listSeparatorTextViewStyle"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:text="@string/crime_details_label" />
+            android:text="@string/crime_details_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/crime_title" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/crime_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp" />
+    <Button
+        android:id="@+id/crime_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/crime_time"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-                <Button
-                    android:id="@+id/crime_time"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_weight="1" />
-        </LinearLayout>
+    <Button
+        android:id="@+id/crime_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-        <CheckBox
-            android:id="@+id/crime_solved"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:text="@string/crime_solved_label" />
-    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/crime_solved"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/crime_solved_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/crime_date" />
+
+    <CheckBox
+        android:id="@+id/crime_requires_police"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="116dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/crime_requires_police"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/crime_solved"
+        app:layout_constraintTop_toBottomOf="@+id/crime_date" />
+
+    <Button
+        android:id="@+id/crime_suspect"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/crime_suspect_text"
+        app:layout_constraintEnd_toStartOf="@+id/crime_report"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/crime_solved" />
+
+    <Button
+        android:id="@+id/crime_report"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/crime_report_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/crime_requires_police" />
+</android.support.constraint.ConstraintLayout>
