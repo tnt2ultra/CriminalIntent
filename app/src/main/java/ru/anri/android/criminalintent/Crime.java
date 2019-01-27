@@ -10,26 +10,29 @@ public class Crime {
     private boolean mSolved;
     private boolean mRequiresPolice;
 
-    public Crime() {
-        this.mId = UUID.randomUUID();
+    public Crime(UUID id) {
+        this.mId = id;
         this.mDate = new Date();
-        this.mRequiresPolice = false;
+    }
+
+    public Crime() {
+        this(UUID.randomUUID());
     }
 
     public boolean isRequiresPolice() {
-        return mRequiresPolice;
+        return this.mRequiresPolice;
     }
 
-    public void setRequiresPolice(boolean mRequiresPolice) {
-        this.mRequiresPolice = mRequiresPolice;
+    public void setRequiresPolice(boolean mReqPolice) {
+        this.mRequiresPolice = mReqPolice;
     }
 
     public UUID getId() {
-        return mId;
+        return this.mId;
     }
 
     public String getTitle() {
-        return mTitle;
+        return this.mTitle;
     }
 
     public void setTitle(String mTitle) {
@@ -37,7 +40,7 @@ public class Crime {
     }
 
     public Date getDate() {
-        return mDate;
+        return this.mDate;
     }
 
     public void setDate(Date mDate) {
@@ -45,7 +48,7 @@ public class Crime {
     }
 
     public boolean isSolved() {
-        return mSolved;
+        return this.mSolved;
     }
 
     public void setSolved(boolean mSolved) {
@@ -53,7 +56,7 @@ public class Crime {
     }
 
     public long getTime() {
-        return mDate.getTime();
+        return this.mDate.getTime();
     }
 
     public void setTime(long mTime) { this.mDate.setTime(mTime); }

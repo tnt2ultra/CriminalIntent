@@ -66,6 +66,12 @@ public class CrimeFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        CrimeLab.get(getActivity()).updateCrime(mCrime);
+    }
+
     public static CrimeFragment newInstance(UUID crimeId) {
         Bundle args = new Bundle();
         args.putSerializable(ARG_CRIME_ID, crimeId);
@@ -95,7 +101,6 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentManager manager = getFragmentManager();
-//                DatePickerFragment dialog = new DatePickerFragment();
                 DatePickerFragment dialog = DatePickerFragment.newInstance(mCrime.getDate());
                 dialog.setTargetFragment(CrimeFragment.this, REQUEST_DATE);
                 dialog.show(manager, DIALOG_DATE);
@@ -118,7 +123,7 @@ public class CrimeFragment extends Fragment {
                 mCrime.setSolved(b);
             }
         });
-        int cnt = CrimeLab.get(getActivity()).getCrimes().size();
+//        int cnt = CrimeLab.get(getActivity()).getCrimes().size();
         return v;
     }
 
@@ -132,8 +137,7 @@ public class CrimeFragment extends Fragment {
             return;
         }
         if (requestCode == REQUEST_DATE) {
-            Date date = (Date) data
-                    .getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+            Date date = (Date) data .getSerializableExtra(DatePickerFragment.EXTRA_DATE);
             Date time = mCrime.getDate();
             mCrime.setDate(date);
             date.setHours(time.getHours());
@@ -142,8 +146,7 @@ public class CrimeFragment extends Fragment {
             updateDate();
         }
         if (requestCode == REQUEST_TIME) {
-            Date time = (Date) data
-                    .getSerializableExtra(TimePickerFragment.EXTRA_TIME);
+            Date time = (Date) data.getSerializableExtra(TimePickerFragment.EXTRA_TIME);
             Date date = mCrime.getDate();
             date.setHours(time.getHours());
             date.setMinutes(time.getMinutes());
