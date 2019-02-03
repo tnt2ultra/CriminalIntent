@@ -1,6 +1,7 @@
 package ru.anri.android.criminalintent;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -26,13 +27,16 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.text.format.DateFormat;
+import android.widget.ImageButton;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
 import static java.text.DateFormat.*;
 
 public class CrimeFragment extends Fragment {
-//    private static final String LOG_TAG = "MyLogs";
+    private static final String LOG_TAG = "MyLogs";
     private static final String ARG_CRIME_ID = "crime_id";
     private static final String DIALOG_DATE = "DialogDate";
     private static final String DIALOG_TIME = "DialogTime";
@@ -48,6 +52,7 @@ public class CrimeFragment extends Fragment {
     private CheckBox mRequiredPolice;
     private Button mReportButton;
     private Button mSuspectButton;
+    private ImageButton mImageButtonCall;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,6 +100,7 @@ public class CrimeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_crime, container, false);
+
         mTitleField = v.findViewById(R.id.crime_title);
         mTitleField.setText(mCrime.getTitle());
         mTitleField.addTextChangedListener(new TextWatcher() {
@@ -105,6 +111,7 @@ public class CrimeFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable editable) {}
         });
+
         mDateButton = v.findViewById(R.id.crime_date);
         mTimeButton = v.findViewById(R.id.crime_time);
         updateDate();
@@ -126,6 +133,7 @@ public class CrimeFragment extends Fragment {
                 dialog.show(manager, DIALOG_TIME);
             }
         });
+
         mSolvedCheckBox = v.findViewById(R.id.crime_solved);
         mSolvedCheckBox.setChecked(mCrime.isSolved());
         mSolvedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -134,6 +142,7 @@ public class CrimeFragment extends Fragment {
                 mCrime.setSolved(b);
             }
         });
+
         mRequiredPolice = v.findViewById(R.id.crime_requires_police);
         mRequiredPolice.setChecked(mCrime.isRequiresPolice());
         mRequiredPolice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -142,6 +151,7 @@ public class CrimeFragment extends Fragment {
                 mCrime.setRequiresPolice(b);
             }
         });
+
 //        int cnt = CrimeLab.get(getActivity()).getCrimes().size();
         mReportButton = v.findViewById(R.id.crime_report);
         mReportButton.setOnClickListener(new View.OnClickListener() {
@@ -168,6 +178,7 @@ public class CrimeFragment extends Fragment {
 */
             }
         });
+
         final Intent pickContact = new Intent(Intent.ACTION_PICK,
                 ContactsContract.Contacts.CONTENT_URI);
 //        pickContact.addCategory(Intent.CATEGORY_HOME);
@@ -186,9 +197,60 @@ public class CrimeFragment extends Fragment {
                 PackageManager.MATCH_DEFAULT_ONLY) == null) {
             mSuspectButton.setEnabled(false);
         }
+
+        mImageButtonCall = v.findViewById(R.id.imageButtonCall);
+        mImageButtonCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Log.d(LOG_TAG, "click: " + ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " = '"
+//                        + mCrime.getSuspect() + "'");
+                Uri contactUri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+                String[] queryFields = new String[] {ContactsContract.CommonDataKinds.Phone._ID,
+                        ContactsContract.CommonDataKinds.Phone.NUMBER};
+                String selection = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + "=?";
+                String[] selectionArgs = new String[] {mCrime.getSuspect()};
+                Cursor c = getActivity().getContentResolver()
+                        .query(contactUri, queryFields, selection, selectionArgs, null);
+                try {
+                    if (c.getCount() == 0) {
+                        return;
+                    }
+                    c.moveToFirst();
+                    long id = c.getLong(0);
+//                    Log.d(LOG_TAG, "" + id);
+//                    String number = getPhoneNumber(id);
+                    String number = c.getString(1);
+//                    Log.d(LOG_TAG, "number " + number);
+                    Uri tel = Uri.parse("tel:" + number);
+                    Intent intent = new Intent(Intent.ACTION_DIAL, tel);
+                    startActivity(intent);
+                } finally {
+                    c.close();
+                }
+            }
+        });
+
         return v;
     }
-
+/*
+    public String getPhoneNumber(long id) {
+        ArrayList<String> phones = new ArrayList<String>();
+        ContentResolver m = getActivity().getContentResolver();
+        Log.d(LOG_TAG, "getPhoneNumber " + id);
+        Cursor cursor = m.query(
+                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                null,
+                ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
+                new String[] {""+id}, null
+        );
+        while (cursor.moveToNext()) {
+            phones.add(cursor.getString(cursor
+                    .getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
+        }
+        cursor.close();
+        return phones.get(0);
+    }
+*/
     public void returnResult() {
         getActivity().setResult(Activity.RESULT_OK, null);
     }
