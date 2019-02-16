@@ -8,6 +8,7 @@ import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
@@ -26,6 +27,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -268,7 +270,33 @@ public class CrimeFragment extends Fragment {
         });
 
         mPhotoView = v.findViewById(R.id.crime_photo);
-        updatePhotoView();
+        mPhotoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mPhotoFile != null && mPhotoFile.exists()) {
+                    FragmentManager manager = getFragmentManager();
+                    BigImageFragment dialog = BigImageFragment.newInstance(mPhotoFile.getPath());
+                    dialog.setTargetFragment(CrimeFragment.this, 0);
+                    dialog.show(manager, null);
+                } else mPhotoButton.performClick();
+            }
+        });
+        ViewTreeObserver vto = mPhotoView.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                PictureUtils.imgWidth = mPhotoView.getWidth();
+                PictureUtils.imgHeight = mPhotoView.getHeight();
+                ViewTreeObserver observer = mPhotoView.getViewTreeObserver();
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    observer.removeOnGlobalLayoutListener(this);
+                } else {
+                    observer.removeGlobalOnLayoutListener(this);
+                }
+                updatePhotoView();
+            }
+        });
+//        updatePhotoView();
 
         return v;
     }

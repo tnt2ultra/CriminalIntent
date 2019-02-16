@@ -4,16 +4,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
 import ru.anri.android.criminalintent.database.CrimeBaseHelper;
 import ru.anri.android.criminalintent.database.CrimeCursorWrapper;
-import ru.anri.android.criminalintent.database.CrimeDbSchema;
 import ru.anri.android.criminalintent.database.CrimeDbSchema.CrimeTable;
 
 public class CrimeLab {
@@ -70,7 +66,6 @@ public class CrimeLab {
                 );
     }
 
-//    private Cursor queryCrimes(String whereClause, String[] whereArgs) {
     private CrimeCursorWrapper queryCrimes(String whereClause, String[] whereArgs) {
         Cursor cursor = mDatabase.query(
                 CrimeTable.NAME,
@@ -115,6 +110,5 @@ public class CrimeLab {
     public File getPhotoFile(Crime crime) {
         File filesDir = mContext.getFilesDir();
         return new File(filesDir, crime.getPhotoFilename());
-//        if (extrnalFilesDir == null) { };
     }
 }
