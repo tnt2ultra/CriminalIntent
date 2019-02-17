@@ -1,5 +1,6 @@
 package ru.anri.android.criminalintent;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,8 +31,18 @@ public class CrimeListFragment extends Fragment {
     private CrimeAdapter mAdapter;
     private int mPositionCrime;
     private boolean mSubtitleVisible;
-    private int mSize;
     private TextView mEmpty;
+    private Callbacks mCallbacks;
+
+    public interface Callbacks {
+        void onCrimeSelected(Crime crime);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mCallbacks = (Callbacks) context;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,12 +56,14 @@ public class CrimeListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_crime_list, container, false);
         mCrimeRecyclerView = view.findViewById(R.id.crime_recycler_view);
         mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mSize = -1;
         if(savedInstanceState != null) {
             mSubtitleVisible = savedInstanceState.getBoolean(SAVED_SUBTITLE_VISIBLE);
         }
         mEmpty = view.findViewById(R.id.textViewEmpty);
         updateUI();
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mAdapter);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(mCrimeRecyclerView);
         return view;
     }
 
@@ -57,6 +71,12 @@ public class CrimeListFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(SAVED_SUBTITLE_VISIBLE, mSubtitleVisible);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
     }
 
     @Override
@@ -84,9 +104,13 @@ public class CrimeListFragment extends Fragment {
             case R.id.new_crime:
                 Crime crime = new Crime();
                 CrimeLab.get(getActivity()).addCrime(crime);
+/*
                 Intent intent = CrimePagerActivity
                         .newIntent(getActivity(), crime.getId());
                 startActivity(intent);
+*/
+                updateUI();
+                mCallbacks.onCrimeSelected(crime);
                 return true;
             case R.id.show_subtitle:
                 mSubtitleVisible = !mSubtitleVisible;
@@ -111,36 +135,23 @@ public class CrimeListFragment extends Fragment {
         activity.getSupportActionBar().setSubtitle(subtitle);
     }
 
-    private void updateUI() {
+    public void updateUI() {
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         List<Crime> crimes = crimeLab.getCrimes();
 
-        int oldSize = mSize;
-        int mSize = crimes.size();
-
-        if (mSize <= 0) {
+        if (crimes.size() <= 0) {
             mEmpty.setVisibility(View.VISIBLE);
         } else {
             mEmpty.setVisibility(View.GONE);
         }
-
         if (mAdapter == null) {
             mAdapter = new CrimeAdapter(crimes);
             mCrimeRecyclerView.setAdapter(mAdapter);
         } else {
             mAdapter.setCrimes(crimes);
             mAdapter.notifyDataSetChanged();
-//            if(oldSize > mSize) {
-//                mAdapter.removeAt(mPositionCrime);
-//            } else {
-//                mAdapter.notifyItemChanged(mPositionCrime);
-//            }
         }
         updateSubtitle();
-    }
-
-    public boolean isEmptyView () {
-        return mSize <= 0;
     }
 
     // ************************************************************************************************
@@ -199,13 +210,10 @@ public class CrimeListFragment extends Fragment {
 
         @Override
         public void onClick(View view) {
-//                Toast.makeText(getActivity(), mCrime.getTitle() + " - " + getString(R.string.crime_clicked), Toast.LENGTH_SHORT).show();
-//                mCrimeRecyclerView.getAdapter().notifyItemMoved(5, 1);
-//            Intent intent = new Intent(getActivity(), CrimePagerActivity.class);
             mPositionCrime = getAdapterPosition();
-//            Log.d(LOG_TAG, "mPositionCrime=" + mPositionCrime);
-            Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getId());
-            startActivity(intent);
+//            Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getId());
+//            startActivity(intent);
+            mCallbacks.onCrimeSelected(mCrime);
         }
 
     }
@@ -219,7 +227,9 @@ public class CrimeListFragment extends Fragment {
     }
 
     // ************************************************************************************************
-    private class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder> {
+    private class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder>
+        implements ItemTouchHelperAdapter
+    {
         private List<Crime> mCrimes;
 
         public CrimeAdapter(List<Crime> crimes) {
@@ -264,10 +274,24 @@ public class CrimeListFragment extends Fragment {
         }
 
         public void removeAt(int position) {
-//            mCrimes.remove(position);
-            notifyItemRemoved(position);
-            notifyItemRangeChanged(position, mCrimes.size());
+            Crime crime = mCrimes.get(position);
+            CrimeLab.get(getActivity()).deleteCrime(crime);
+            updateUI();
+//            notifyItemRemoved(position);
+//            int itemCount = mCrimes.size() - position;
+//            notifyItemRangeChanged(position, itemCount);
         }
 
+        @Override
+        public void onItemDismiss(int position) {
+            removeAt(position);
+        }
+/*
+        @Override
+        public boolean onItemMove(int fromPosition, int toPosition) {
+            // swap
+            return false;
+        }
+*/
     }
 }

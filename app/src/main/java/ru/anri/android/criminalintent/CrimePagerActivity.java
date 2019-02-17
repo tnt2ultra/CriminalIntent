@@ -15,7 +15,9 @@ import android.widget.Button;
 import java.util.List;
 import java.util.UUID;
 
-public class CrimePagerActivity extends AppCompatActivity implements View.OnClickListener {
+public class CrimePagerActivity extends AppCompatActivity
+        implements View.OnClickListener, CrimeFragment.Callbacks
+{
 
     private static final String EXTRA_CRIME_ID = "ru.anri.android.criminalintent.crime_id";
 
@@ -79,5 +81,10 @@ public class CrimePagerActivity extends AppCompatActivity implements View.OnClic
                 mViewPager.setCurrentItem(mCrimes.size());
                 break;
         }
+    }
+
+    @Override
+    public void onCrimeUpdated(Crime crime) {
+
     }
 }
