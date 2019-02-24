@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">Преступные намерения</string>
+    <string name="crime_title_hint">Введите название Преступления.</string>
+    <string name="crime_title_label">Заглавие</string>
+    <string name="crime_details_label">Подробности</string>
+    <string name="crime_solved_label">Решено</string>
+    <string name="crime_text_one">Преступление №</string>
+    <string name="crime_list_txt">Заголовок преступления</string>
+    <string name="crime_list_date">Дата преступления</string>
+    <string name="btn_call_police">Вызвать полицию</string>
+    <string name="full_date_time_format" translatable="false"> EEEE, dd MMMM yyyy, HH:mm </string>
+    <string name="crime_solved_txt">Преступленик найден</string>
+    <string name="button_go_to_begin">В начало</string>
+    <string name="button_go_to_end">В конец</string>
+    <string name="date_picker_title">Дата преступления:</string>
+    <string name="time_picker_title">Время преступления:</string>
+    <string name="full_time_format" translatable="false"> HH:mm </string>
+    <string name="new_crime">Новое преступление</string>
+    <string name="show_subtitle">Показывать подзаголовок</string>
+    <string name="hide_subtitle">Спрятать подзаголовок</string>
+    <string name="subtitle_format">%1$d преступление(-я,-й)</string>
+    <string name="delete_crime">Удалить преступление</string>
+    <string name="empty_list">Список пуст</string>
+    <plurals name="subtitle_plural">
+        <item quantity="one">%1$d преступление</item>
+        <item quantity="few">%1$d преступления</item>
+        <item quantity="many">%1$d преступлений</item>
+        <item quantity="other">%1$d преступлений</item>
+    </plurals>
+    <string name="crime_suspect_text">Выберите подозреваемого</string>
+    <string name="crime_report_text">Отправить отчет</string>
+    <string name="crime_requires_police">Требуется полиция</string>
+    <string name="crime_report">%1$s!
+Преступление было раскрыто на %2$s. %3$s, и %4$s
+</string>
+    <string name="crime_report_solved">Дело раскрыто</string>
+    <string name="crime_report_unsolved">Дело не раскрыто</string>
+    <string name="crime_report_no_suspect">подозреваемого нет.</string>
+    <string name="crime_report_suspect">подозреваемый %s.</string>
+    <string name="crime_report_subject">Отчёт о преступных намерениях</string>
+    <string name="send_report">Отправить отчет о преступлении через</string>
+</resources>
