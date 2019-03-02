@@ -8,13 +8,11 @@
     <string name="crime_list_txt">Заголовок преступления</string>
     <string name="crime_list_date">Дата преступления</string>
     <string name="btn_call_police">Вызвать полицию</string>
-    <string name="full_date_time_format" translatable="false"> EEEE, dd MMMM yyyy, HH:mm </string>
-    <string name="crime_solved_txt">Преступленик найден</string>
+    <string name="crime_solved_txt">Преступник найден</string>
     <string name="button_go_to_begin">В начало</string>
     <string name="button_go_to_end">В конец</string>
     <string name="date_picker_title">Дата преступления:</string>
     <string name="time_picker_title">Время преступления:</string>
-    <string name="full_time_format" translatable="false"> HH:mm </string>
     <string name="new_crime">Новое преступление</string>
     <string name="show_subtitle">Показывать подзаголовок</string>
     <string name="hide_subtitle">Спрятать подзаголовок</string>
@@ -39,4 +37,12 @@
     <string name="crime_report_suspect">подозреваемый %s.</string>
     <string name="crime_report_subject">Отчёт о преступных намерениях</string>
     <string name="send_report">Отправить отчет о преступлении через</string>
+    <string name="crime_photo_no_image_description">Фотография места преступления (не задана)</string>
+    <string name="crime_photo_image_description">Фотография места преступления (задана)</string>
+    <string name="crime_photo_button_description">Сделать фотографию места преступления</string>
+    <string name="crime_call_suspect">Позвонить подозреваемому</string>
+    <string name="crime_full_image">Полное фото преступления</string>
+    <string name="txt_label_call">"Звонок подозреваемому "</string>
+    <string name="txt_label_date">Дата преступления</string>
+    <string name="txt_label_time">Время преступления</string>
 </resources>

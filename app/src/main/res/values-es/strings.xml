@@ -32,4 +32,12 @@ El crimen fue descubierto el %2$s. %3$s, y %4$s
     <string name="delete_crime">Suprímase El Crimen</string>
     <string name="empty_list">La lista está vacía</string>
     <string name="crime_requires_police">Requiere Policía</string>
+    <string name="crime_photo_no_image_description">Foto de la escena del crimen (no está colocada)</string>
+    <string name="crime_photo_image_description">Foto de la escena del crimen (set)</string>
+    <string name="crime_photo_button_description">Tome la foto de la escena del crimen</string>
+    <string name="crime_call_suspect">Llame al sospechoso</string>
+    <string name="crime_full_image">Foto completa del crimen</string>
+    <string name="txt_label_call">Llame al sospechoso</string>
+    <string name="txt_label_date">Fecha del delito</string>
+    <string name="txt_label_time">Hora del crimen</string>
 </resources>
