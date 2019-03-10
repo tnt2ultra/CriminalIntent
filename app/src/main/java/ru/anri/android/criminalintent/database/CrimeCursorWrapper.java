@@ -8,6 +8,7 @@ import ru.anri.android.criminalintent.Crime;
 import ru.anri.android.criminalintent.database.CrimeDbSchema.CrimeTable;
 
 public class CrimeCursorWrapper extends CursorWrapper {
+
     public CrimeCursorWrapper(Cursor cursor) {
         super(cursor);
     }

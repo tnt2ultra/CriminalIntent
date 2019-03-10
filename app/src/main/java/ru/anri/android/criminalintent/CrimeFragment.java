@@ -1,7 +1,6 @@
 package ru.anri.android.criminalintent;
 
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -21,7 +20,7 @@ import android.support.v4.app.ShareCompat;
 import android.support.v4.content.FileProvider;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,17 +32,18 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.text.format.DateFormat;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import static java.text.DateFormat.*;
+import static java.text.DateFormat.LONG;
+import static java.text.DateFormat.SHORT;
+import static java.text.DateFormat.getDateInstance;
+import static java.text.DateFormat.getTimeInstance;
 
 public class CrimeFragment extends Fragment {
     private static final String LOG_TAG = "MyLogs";
@@ -82,8 +82,6 @@ public class CrimeFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        mCrime = new Crime();
-//        UUID crimeId = (UUID) getActivity().getIntent().getSerializableExtra(CrimePagerActivity.EXTRA_CRIME_ID);
         UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
         mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
         setHasOptionsMenu(true);
@@ -189,7 +187,6 @@ public class CrimeFragment extends Fragment {
             }
         });
 
-//        int cnt = CrimeLab.get(getActivity()).getCrimes().size();
         mReportButton = v.findViewById(R.id.crime_report);
         mReportButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -204,21 +201,11 @@ public class CrimeFragment extends Fragment {
                 if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
                     startActivity(intent);
                 }
-/*
-                Intent i = new Intent(Intent.ACTION_SEND);
-                i.setType("texp/plain");
-                i.putExtra(Intent.EXTRA_TEXT, getCrimeReport());
-                i.putExtra(Intent.EXTRA_SUBJECT,
-                        getString(R.string.crime_report_subject));
-                i = Intent.createChooser(i, getString(R.string.send_report));
-                startActivity(i);
-*/
             }
         });
 
         final Intent pickContact = new Intent(Intent.ACTION_PICK,
                 ContactsContract.Contacts.CONTENT_URI);
-//        pickContact.addCategory(Intent.CATEGORY_HOME);
         mSuspectButton = v.findViewById(R.id.crime_suspect);
         mSuspectButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -239,8 +226,6 @@ public class CrimeFragment extends Fragment {
         mImageButtonCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Log.d(LOG_TAG, "click: " + ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " = '"
-//                        + mCrime.getSuspect() + "'");
                 Uri contactUri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
                 String[] queryFields = new String[] {ContactsContract.CommonDataKinds.Phone._ID,
                         ContactsContract.CommonDataKinds.Phone.NUMBER};
@@ -253,11 +238,7 @@ public class CrimeFragment extends Fragment {
                         return;
                     }
                     c.moveToFirst();
-                    long id = c.getLong(0);
-//                    Log.d(LOG_TAG, "" + id);
-//                    String number = getPhoneNumber(id);
                     String number = c.getString(1);
-//                    Log.d(LOG_TAG, "number " + number);
                     Uri tel = Uri.parse("tel:" + number);
                     Intent intent = new Intent(Intent.ACTION_DIAL, tel);
                     startActivity(intent);
@@ -319,29 +300,9 @@ public class CrimeFragment extends Fragment {
                 updatePhotoView();
             }
         });
-//        updatePhotoView();
-
         return v;
     }
-/*
-    public String getPhoneNumber(long id) {
-        ArrayList<String> phones = new ArrayList<String>();
-        ContentResolver m = getActivity().getContentResolver();
-        Log.d(LOG_TAG, "getPhoneNumber " + id);
-        Cursor cursor = m.query(
-                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                null,
-                ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
-                new String[] {""+id}, null
-        );
-        while (cursor.moveToNext()) {
-            phones.add(cursor.getString(cursor
-                    .getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
-        }
-        cursor.close();
-        return phones.get(0);
-    }
-*/
+
     public void returnResult() {
         getActivity().setResult(Activity.RESULT_OK, null);
     }
@@ -404,7 +365,6 @@ public class CrimeFragment extends Fragment {
     }
 
     private void updateDate() {
-//        mDateButton.setText(DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT).format(mCrime.getDate()));
         mDateButton.setText(getDateInstance(LONG)
                 .format(mCrime.getDate()));
         mTimeButton.setText(getTimeInstance(SHORT)

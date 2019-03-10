@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,11 +18,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import java.util.Date;
 import java.util.List;
 
 public class CrimeListFragment extends Fragment {
-//    private static final String LOG_TAG = "MyLogs";
     private static final int REQUEST_CRIME = 1;
     private static final String SAVED_SUBTITLE_VISIBLE = "subtitle";
 
@@ -52,7 +51,8 @@ public class CrimeListFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_crime_list, container, false);
         mCrimeRecyclerView = view.findViewById(R.id.crime_recycler_view);
         mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -104,11 +104,6 @@ public class CrimeListFragment extends Fragment {
             case R.id.new_crime:
                 Crime crime = new Crime();
                 CrimeLab.get(getActivity()).addCrime(crime);
-/*
-                Intent intent = CrimePagerActivity
-                        .newIntent(getActivity(), crime.getId());
-                startActivity(intent);
-*/
                 updateUI();
                 mCallbacks.onCrimeSelected(crime);
                 return true;
@@ -125,7 +120,6 @@ public class CrimeListFragment extends Fragment {
     private void updateSubtitle() {
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         int crimeCount = crimeLab.getCrimes().size();
-//        String subtitle = getString(R.string.subtitle_format, crimeCount);
         String subtitle = getResources()
                 .getQuantityString(R.plurals.subtitle_plural, crimeCount, crimeCount);
         if(!mSubtitleVisible) {
@@ -158,7 +152,6 @@ public class CrimeListFragment extends Fragment {
     private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView mTitleTextView;
         private TextView mDateTextView;
-//        private TextView mTimeTextView;
         private Crime mCrime;
         private ImageView mSolvedImageView;
 
@@ -176,28 +169,21 @@ public class CrimeListFragment extends Fragment {
             itemView.setOnClickListener(this);
             mTitleTextView = itemView.findViewById(R.id.crime_title);
             mDateTextView = itemView.findViewById(R.id.crime_date);
-//            mTimeTextView = itemView.findViewById(R.id.crime_time);
             mSolvedImageView = itemView.findViewById(R.id.crime_solved);
         }
 
         public void bind(Crime crime) {
             mCrime = crime;
             mTitleTextView.setText(mCrime.getTitle());
-//            mDateTextView.setText(mCrime.getDate().toString());
-//            mDateTextView.setText(DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT).format(mCrime.getDate()));
             mDateTextView.setText(formatDate(mCrime.getDate()));
-//            mTimeTextView.setText(formatTime(mCrime.getDate()));
-//            android.text.format.DateUtils.formatDateTime(getContext(), millis,
-//                    android.text.format.DateUtils.FORMAT_SHOW_WEEKDAY | android.text.format.DateUtils.FORMAT_SHOW_DATE | android.text.format.DateUtils.FORMAT_SHOW_YEAR);
             if (mSolvedImageView != null) {
                 mSolvedImageView.setVisibility(crime.isSolved() ? View.VISIBLE: View.GONE);
             }
         }
 
         private String formatDate(Date date){
-//            java.text.DateFormat df = android.text.format.DateFormat.getLongDateFormat(getActivity().getApplicationContext());
-//            return android.text.format.DateFormat.format(getString(R.string.full_date_format), date) + ", " + df.format(date);
-            java.lang.CharSequence stDate = android.text.format.DateFormat.format(getString(R.string.full_date_time_format), date);  //import android.text.format.DateFormat;
+            java.lang.CharSequence stDate = android.text.format.DateFormat
+                    .format(getString(R.string.full_date_time_format), date);
             String st = stDate.toString();
             return st;
         }
@@ -211,8 +197,6 @@ public class CrimeListFragment extends Fragment {
         @Override
         public void onClick(View view) {
             mPositionCrime = getAdapterPosition();
-//            Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getId());
-//            startActivity(intent);
             mCallbacks.onCrimeSelected(mCrime);
         }
 
@@ -277,21 +261,12 @@ public class CrimeListFragment extends Fragment {
             Crime crime = mCrimes.get(position);
             CrimeLab.get(getActivity()).deleteCrime(crime);
             updateUI();
-//            notifyItemRemoved(position);
-//            int itemCount = mCrimes.size() - position;
-//            notifyItemRangeChanged(position, itemCount);
         }
 
         @Override
         public void onItemDismiss(int position) {
             removeAt(position);
         }
-/*
-        @Override
-        public boolean onItemMove(int fromPosition, int toPosition) {
-            // swap
-            return false;
-        }
-*/
+
     }
 }
